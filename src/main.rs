@@ -1,5 +1,5 @@
-use iced::{Alignment, Length};
-use iced::widget::{text, column, Column, Container, Row, row, center, container};
+use iced::Length;
+use iced::widget::{text, column, Column, Container, row, container};
 
 fn main() -> iced::Result {
     iced::run("Cool Calc", Calculator::update, Calculator::view)
