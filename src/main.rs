@@ -1,4 +1,5 @@
-use iced::widget::{text, column, Column, Container, Row, row};
+use iced::{Alignment, Length};
+use iced::widget::{text, column, Column, Container, Row, row, center, container};
 
 fn main() -> iced::Result {
     iced::run("Cool Calc", Calculator::update, Calculator::view)
@@ -52,23 +53,67 @@ impl Calculator {
             Message::SetMode(mode) => {}
         }
     }
-    
-    // the ui returns a single 
+
+    // the ui returns a single
     fn view(&self) -> Container<Message> {
         // add the reverse so it does the row in a bit more of a standard way if you look at a calculator
-        Container::new((0..3).rev().fold(
+        Container::new((0..=3).rev().fold(
             // columns the rows go into
             Column::new(),
             |a, b| {
-                a.push(
-                    // will be buttons eventually
-                    row!(
-                        text(format!(" test a  {} ", b)).size(20),
-                        text(format!(" test b {} ", b)).size(20),
-                        text(format!(" test c {} ", b)).size(20),
-                    ).padding(20)
-                )
+                match b {
+                    // lowest layer
+                    0 => {
+                        a.push(
+                            container(
+                            row!(
+                                text(" - ").size(30),
+                                text(" 0 ").size(30),
+                                text(" . ").size(30)
+                            )
+                            ).center_x(Length::Fill)
+                        )
+                    },
+                    1 => {
+                        a.push(
+                            container(
+                            row!(
+                                text(" 1 ").size(30),
+                                text(" 2 ").size(30),
+                                text(" 3 ").size(30) 
+                            )
+                                .padding(20)
+                            )
+                                .center_x(Length::Fill)
+                        )
+                    }
+                    2 => {
+                        a.push(
+                            container(
+                            row!(
+                                    text(" 4 ").size(30),
+                                    text(" 5 ").size(30),
+                                    text(" 6 ").size(30) 
+                                )
+                                .padding(20)
+                            ).center_x(Length::Fill)
+                        )
+                    }
+                    3 => {
+                        a.push(
+                            container(
+                            row!(
+                                    text(" 7 ").size(30),
+                                    text(" 8 ").size(30),
+                                    text(" 9 ").size(30) 
+                                )
+                                .padding(20)
+                            ).center_x(Length::Fill)
+                        )
+                    }
+                    _ => {column![]}
+                }
             },
-        ))
+        )).center_x(Length::Fill).center_y(Length::Fill)
     }
 }
