@@ -1,5 +1,5 @@
+use iced::widget::{button, column, container, row, text, Column, Container};
 use iced::Length;
-use iced::widget::{text, column, Column, Container, row, container};
 
 fn main() -> iced::Result {
     iced::run("Cool Calc", Calculator::update, Calculator::view)
@@ -13,9 +13,8 @@ struct Calculator {
     first_value_set: bool,
     second_value: u64,
     mode: Mode,
-    operation: Operation
+    operation: Operation,
 }
-
 
 // different bases I want the calculator to support
 #[derive(Debug, Clone, Copy, Default)]
@@ -23,8 +22,8 @@ enum Mode {
     #[default]
     DEC, // base 10 (normal math 10 + 10 = 20)
     OCT, // base 8 (7 + 7 = 16) (actually 14 but base 8)
-    HEX,// base 16 (A + A = 14) (actually 20 but base 16)
-    BIN // binary just base 2 (100111 * 11011 = 10000011101) (multiplication because why not) (actually 1,053 in base 10)
+    HEX, // base 16 (A + A = 14) (actually 20 but base 16)
+    BIN, // binary just base 2 (100111 * 11011 = 10000011101) (multiplication because why not) (actually 1,053 in base 10)
 }
 
 #[derive(Debug, Clone, Copy, Default)]
@@ -33,7 +32,7 @@ enum Operation {
     ADD,
     SUB,
     MUL,
-    DIV
+    DIV,
 }
 
 // to be used when the supporting ui exists
@@ -41,7 +40,7 @@ enum Operation {
 enum Message {
     SetValue(u64),
     Calculate(Operation),
-    SetMode(Mode)
+    SetMode(Mode),
 }
 
 impl Calculator {
@@ -63,71 +62,65 @@ impl Calculator {
             |a, b| {
                 match b {
                     // lowest layer
-                    0 => {
-                        a.push(
-                            container(
+                    0 => a.push(
+                        container(row!(
+                            container(button(" - ")).padding(10),
+                            container(button(" 0 ")).padding(10),
+                            container(button(" . ")).padding(10),
+                        ))
+                        .center_x(Length::Fill),
+                    ),
+                    1 => a.push(
+                        container(
                             row!(
-                                text(" - ").size(30),
-                                text(" 0 ").size(30),
-                                text(" . ").size(30)
+                                container(button(" 1 "),).padding(10),
+                                container(button(" 2 ")).padding(10),
+                                container(button(" 3 ")).padding(10),
                             )
-                            ).center_x(Length::Fill)
+                            .padding(20),
                         )
-                    },
-                    1 => {
-                        a.push(
-                            container(
+                        .center_x(Length::Fill),
+                    ),
+                    2 => a.push(
+                        container(
                             row!(
-                                text(" 1 ").size(30),
-                                text(" 2 ").size(30),
-                                text(" 3 ").size(30) 
+                                container(button(" 4 ")).padding(10),
+                                container(button(" 5 ")).padding(10),
+                                container(button(" 6 ")).padding(10),
                             )
-                                .padding(20)
+                            .padding(20),
+                        )
+                        .center_x(Length::Fill),
+                    ),
+                    3 => a.push(
+                        container(
+                            row!(
+                                container(button(" 7 ")).padding(10),
+                                container(button(" 8 ")).padding(10),
+                                container(button(" 9 ")).padding(10),
                             )
-                                .center_x(Length::Fill)
+                            .padding(20),
                         )
+                        .center_x(Length::Fill),
+                    ),
+                    4 => a.push(
+                        container(row!(
+                            container(button(" A ")).padding(10),
+                            container(button(" B ")).padding(10),
+                            container(button(" C ")).padding(10),
+                            container(button(" D ")).padding(10),
+                            container(button(" E ")).padding(10),
+                            container(button(" F ")).padding(10),
+                        ))
+                        .center_x(Length::Fill),
+                    ),
+                    _ => {
+                        column![]
                     }
-                    2 => {
-                        a.push(
-                            container(
-                            row!(
-                                    text(" 4 ").size(30),
-                                    text(" 5 ").size(30),
-                                    text(" 6 ").size(30) 
-                                )
-                                .padding(20)
-                            ).center_x(Length::Fill)
-                        )
-                    }
-                    3 => {
-                        a.push(
-                            container(
-                            row!(
-                                    text(" 7 ").size(30),
-                                    text(" 8 ").size(30),
-                                    text(" 9 ").size(30) 
-                                )
-                                .padding(20)
-                            ).center_x(Length::Fill)
-                        )
-                    }
-                    4 => {
-                        a.push(
-                            container(
-                                row!(
-                                        text(" A ").size(30),
-                                        text(" B ").size(30),
-                                        text(" C ").size(30),
-                                        text(" D ").size(30),
-                                        text(" E ").size(30),
-                                        text(" F ").size(30)
-                                )
-                            ).center_x(Length::Fill)
-                        )
-                    }
-                    _ => {column![]}
                 }
             },
-        )).center_x(Length::Fill).center_y(Length::Fill)
+        ))
+        .center_x(Length::Fill)
+        .center_y(Length::Fill)
     }
 }
