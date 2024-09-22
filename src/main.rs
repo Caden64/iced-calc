@@ -57,7 +57,7 @@ impl Calculator {
     // the ui returns a single
     fn view(&self) -> Container<Message> {
         // add the reverse so it does the row in a bit more of a standard way if you look at a calculator
-        Container::new((0..=3).rev().fold(
+        Container::new((0..=4).rev().fold(
             // columns the rows go into
             Column::new(),
             |a, b| {
@@ -108,6 +108,20 @@ impl Calculator {
                                     text(" 9 ").size(30) 
                                 )
                                 .padding(20)
+                            ).center_x(Length::Fill)
+                        )
+                    }
+                    4 => {
+                        a.push(
+                            container(
+                                row!(
+                                        text(" A ").size(30),
+                                        text(" B ").size(30),
+                                        text(" C ").size(30),
+                                        text(" D ").size(30),
+                                        text(" E ").size(30),
+                                        text(" F ").size(30)
+                                )
                             ).center_x(Length::Fill)
                         )
                     }
